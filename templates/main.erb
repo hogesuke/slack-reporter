@@ -1,0 +1,21 @@
+<html>
+<head>
+</head>
+<body>
+<div id="header">
+
+</div>
+<div id="main">
+  <div id="side-bar">
+  </div>
+  <div id="main-body">
+    <% histories.each do |h| %>
+        <% h['messages'].each do |m| %>
+            <div><%= user_names[m['user']] %></div>
+            <div><%= m['text'] %></div>
+        <% end %>
+    <% end %>
+  </div>
+</div>
+</body>
+</html>
