@@ -19,16 +19,14 @@ class Reporter
       histories[c['id']] = fetch_history(c)
     end
 
-    # histories.each do |h|
-    #   puts h['messages']
-    # end
+    # pp histories
 
     user_ids = []
     histories.each do |ch_id, history|
       user_ids << history['messages'].select{ |m| !m['user'].nil? }.map{ |m| m['user'] }
     end
     user_ids.flatten!.uniq!
-    pp user_ids
+    # pp user_ids
 
     users = fetch_users(user_ids)
     user_names = {}
@@ -37,7 +35,7 @@ class Reporter
     template = File.read(File.join(__dir__, './templates/main.erb'))
     html = ERB.new(template).result(binding)
 
-    File.write(File.join(__dir__, "./out/#{DateTime.now.strftime('%Y%m%d_%H%M%S')}.html"), html)
+    File.write(File.join(__dir__, "./contents/#{DateTime.now.strftime('%Y%m%d_%H%M%S')}.html"), html)
   end
 
   def fetch_channels()

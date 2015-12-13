@@ -1,0 +1,84 @@
+html, body {
+    font-family: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', Meiryo, メイリオ, Osaka, 'MS PGothic', arial, helvetica, sans-serif;
+}
+
+#main {
+}
+
+#side-bar {
+    float: left;
+    overflow-y: scroll;
+    height: 100%;
+    width: 200px;
+    background-color: #50325f;
+    color: #ffffff;
+}
+
+#side-bar #channel-list ul {
+    padding-left: 10px;
+}
+
+#side-bar #channel-list ul a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+#side-bar #channel-list ul a li {
+    padding: 2px 0 2px 10px;
+    list-style: none;
+}
+
+#side-bar #channel-list ul a li:hover {
+    background-color: #7f558e;
+}
+
+#main-body {
+    float: left;
+    overflow-y: scroll;
+    width: calc(100% - 200px);
+    height: 100%
+}
+
+.channel-container {
+    padding: 10px 15px;
+    border-bottom: solid 1px #dddddd;
+}
+
+.channel-container .channel-name {
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #232323;
+}
+
+.channel-container .message {
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.channel-container .message:last-child {
+    margin-bottom: 0;
+}
+
+.channel-container .message .user-icon {
+    float: left;
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+.channel-container .message .user-name {
+    padding-left: 42px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #232323;
+}
+
+.channel-container .message .message-text {
+    padding-left: 42px;
+    font-size: 14px;
+    color: #2f2f2f;
+}
+
+@keyframes channel-scroll {
+
+}
