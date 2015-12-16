@@ -1,16 +1,19 @@
 html, body {
+    height: 100%;
     font-family: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', Meiryo, メイリオ, Osaka, 'MS PGothic', arial, helvetica, sans-serif;
 }
 
 #main {
+    overflow: hidden;
+    height: 100%;
 }
 
 #side-bar {
     float: left;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 100%;
     width: 200px;
-    background-color: #50325f;
+    background-color: #4E305D;
     color: #ffffff;
 }
 
@@ -35,9 +38,9 @@ html, body {
 
 #main-body {
     float: left;
-    overflow-y: scroll;
+    overflow-y: auto;
+    height: 100%;
     width: calc(100% - 200px);
-    height: 100%
 }
 
 .channel-container {
