@@ -3,15 +3,21 @@ require 'net/http'
 require 'uri'
 require 'erb'
 require 'date'
+require 'time'
 require 'pp'
 
 class Reporter
 
   def initialize
     @token = ENV['SLACK_API_TOKEN']
+    @start_time = ARGV[0]
+    @end_time = ARGV[1]
   end
 
   def run
+    pp get_time_range(@start_time, @end_time)
+    return
+
     channels = fetch_channels
 
     histories = {}
@@ -66,6 +72,23 @@ class Reporter
     puts 'end history request'
 
     JSON.parse(res)
+  end
+
+  def get_time_range(start_time_str, end_time_str)
+
+    start_time = Time.parse(start_time_str)
+    end_time   = Time.parse(end_time_str)
+
+    if start_time > end_time
+      fail 'hogehoge'
+    end
+
+    if end_time > Time.now
+      start_time = start_time - (24 * 60 * 60)
+      end_time = end_time - (24 * 60 * 60)
+    end
+
+    { :start_time => start_time, :end_time => end_time }
   end
 
 end
