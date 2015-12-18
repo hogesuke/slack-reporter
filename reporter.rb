@@ -15,14 +15,13 @@ class Reporter
   end
 
   def run
-    pp get_time_range(@start_time, @end_time)
-    return
+    time_range = get_time_range(@start_time, @end_time)
 
     channels = fetch_channels
 
     histories = {}
     channels.each do |c|
-      histories[c['id']] = fetch_history(c)
+      histories[c['id']] = fetch_history(c, time_range)
     end
 
     # pp histories
@@ -65,8 +64,8 @@ class Reporter
     users.select{ |u| !u['user'].nil? }.map{ |u| u['user'] }
   end
 
-  def fetch_history(channel)
-    url = URI.parse("https://slack.com/api/channels.history?token=#{@token}&channel=#{channel['id']}&count=2")
+  def fetch_history(channel, time_range)
+    url = URI.parse("https://slack.com/api/channels.history?token=#{@token}&channel=#{channel['id']}&oldest=#{time_range[:start_time]}&latest=#{time_range[:end_time]}")
     puts 'start history request'
     res = Net::HTTP.get(url)
     puts 'end history request'
@@ -106,7 +105,7 @@ class Reporter
       start_time = start_time - a_day_seconds
     end
 
-    { :start_time => start_time, :end_time => end_time }
+    { :start_time => start_time.to_i, :end_time => end_time.to_i }
   end
 
 end
