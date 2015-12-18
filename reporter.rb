@@ -76,16 +76,17 @@ class Reporter
 
   def get_time_range(start_time_str, end_time_str)
 
-    start_time = Time.parse(start_time_str)
-    end_time   = Time.parse(end_time_str)
-
-    if start_time > end_time
-      fail 'hogehoge'
-    end
+    start_time    = Time.parse(start_time_str)
+    end_time      = Time.parse(end_time_str)
+    a_day_seconds = 24 * 60 * 60
 
     if end_time > Time.now
-      start_time = start_time - (24 * 60 * 60)
-      end_time = end_time - (24 * 60 * 60)
+      start_time = start_time - a_day_seconds
+      end_time = end_time - a_day_seconds
+    end
+
+    if start_time > end_time
+      start_time = start_time - a_day_seconds
     end
 
     { :start_time => start_time, :end_time => end_time }
