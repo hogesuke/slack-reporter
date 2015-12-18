@@ -83,8 +83,11 @@ class Reporter
     end
 
     unless start_time_str.to_i <= 2400 and end_time_str.to_i <= 2400
-      fail '2400より大きい時刻の指定はできません'
+      fail '2400より大きい時刻の指定はできません。'
     end
+
+    start_time_str = start_time_str[0..1] + ':' + start_time_str[2..3]
+    end_time_str   = end_time_str[0..1] + ':' + end_time_str[2..3]
 
     start_time    = Time.parse(start_time_str)
     end_time      = Time.parse(end_time_str)
