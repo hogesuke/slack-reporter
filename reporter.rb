@@ -76,6 +76,16 @@ class Reporter
 
   def get_time_range(start_time_str, end_time_str)
 
+    time_regexp = /([01][0-9]|2[0-4])[0-5][0-9]/
+
+    unless start_time_str =~ time_regexp and end_time_str =~ time_regexp
+      fail 'start_time, end_timeは4桁の数字で時刻を入力してください。'
+    end
+
+    unless start_time_str.to_i <= 2400 and end_time_str.to_i <= 2400
+      fail '2400より大きい時刻の指定はできません'
+    end
+
     start_time    = Time.parse(start_time_str)
     end_time      = Time.parse(end_time_str)
     a_day_seconds = 24 * 60 * 60
@@ -86,6 +96,10 @@ class Reporter
     end
 
     if start_time > end_time
+      start_time = start_time - a_day_seconds
+    end
+
+    if start_time == end_time
       start_time = start_time - a_day_seconds
     end
 
