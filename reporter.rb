@@ -11,13 +11,10 @@ class Reporter
 
   def initialize
     @token = ENV['SLACK_API_TOKEN']
-    @user = ENV['SLACK_USER']
+    @user  = ENV['SLACK_USER']
 
     if @token.nil?
-      fail 'SLACK_API_TOKENを環境変数に登録してください。'
-    end
-    if @user.nil?
-      fail 'SLACK_USERを環境変数に登録してください。'
+      fail 'SLACK_API_TOKENを環境変数に設定してください。'
     end
 
     if ARGV.size == 2
@@ -56,7 +53,9 @@ class Reporter
 
     File.write(path, html)
 
-    post_report(@user, 'file://' + path)
+    unless @user.nil?
+      post_report(@user, 'file://' + path)
+    end
   end
 
   def fetch_channels()
