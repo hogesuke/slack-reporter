@@ -17,7 +17,7 @@
       <ul>
         <% channels.each do |c| %>
             <a href="#channel_<%= c['name'] %>">
-              <li>#<%= c['name'] %></li>
+              <li><%= c['name'] %></li>
             </a>
         <% end %>
       </ul>
@@ -27,19 +27,20 @@
     <% histories.each do |ch_id, history| %>
         <% ch = channels.find{ |c| c['id'] == ch_id } %>
         <div id="channel_<%= ch['name'] %>" class="channel-container">
-          <div class="channel-name">
-            #<%= ch['name'] %>
-          </div>
+          <div class="channel-name"><%= ch['name'] %></div>
           <% history['messages'].reverse.each do |m| %>
               <div class="message">
                 <div class="user-icon">
                   <% user = users.find{ |u| u['id'] == m['user'] } %>
-                  <% if user && user['profile'] && user['profile']['image_32'] %>
+                  <% if user && user['profile'] && user['profile']['image_48'] %>
                       <% pp user['profile'] %>
-                      <img src="<%= users.find{ |u| u['id'] == m['user'] }['profile']['image_32'] %>">
+                      <img src="<%= users.find{ |u| u['id'] == m['user'] }['profile']['image_48'] %>">
                   <% end %>
                 </div>
-                <div class="user-name"><%= user_names[m['user']] %></div>
+                <div class="message-header">
+                  <span class="user-name"><%= user_names[m['user']] %></span>
+                  <span class="message-datetime"><%= Time.at(m['ts'].to_i).strftime('%b %e, %I:%M %p') %></span>
+                </div>
                 <% unless m['text'].nil? or m['text'].empty? %>
                     <div class="message-text"><%= m['text'] %></div>
                 <% end %>

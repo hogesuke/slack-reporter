@@ -12,9 +12,8 @@ html, body {
     float: left;
     overflow-y: auto;
     height: 100%;
-    width: 200px;
-    background-color: #4E305D;
-    color: #ffffff;
+    width: 220px;
+    background-color: #4d394b;
 }
 
 #side-bar #channel-list ul {
@@ -23,8 +22,8 @@ html, body {
 
 #side-bar #channel-list ul a {
     text-decoration: none;
-    color: #ffffff;
-    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 15px;
 }
 
 #side-bar #channel-list ul a li {
@@ -32,15 +31,21 @@ html, body {
     list-style: none;
 }
 
+#side-bar #channel-list ul a li:before {
+    content: "# ";
+    color: rgba(255, 255, 255, 0.4);
+}
+
 #side-bar #channel-list ul a li:hover {
-    background-color: #7f558e;
+    background-color: #3E313C;
+    border-radius: 5px;
 }
 
 #main-body {
     float: left;
     overflow-y: auto;
     height: 100%;
-    width: calc(100% - 200px);
+    width: calc(100% - 220px);
 }
 
 .channel-container {
@@ -51,7 +56,12 @@ html, body {
 .channel-container .channel-name {
     margin-bottom: 10px;
     font-size: 24px;
-    color: #232323;
+    color: #343434;
+}
+
+.channel-container .channel-name:before {
+    content: "#";
+    color: #9e9ea6;
 }
 
 .channel-container .message {
@@ -65,21 +75,35 @@ html, body {
 
 .channel-container .message .user-icon {
     float: left;
-    margin-top: 5px;
     font-size: 16px;
 }
 
-.channel-container .message .user-name {
-    padding-left: 42px;
+.channel-container .message .user-icon img {
+    height: 36px;
+    width: 36px;
+    border-radius: 3px;
+}
+
+.channel-container .message .message-header {
+    padding-left: 47px;
     font-size: 14px;
+}
+
+.channel-container .message .message-header .message-datetime {
+    font-size: 12px;
+    color: #999999;
+}
+
+.channel-container .message .message-header .user-name {
+    font-size: 15px;
     font-weight: bold;
-    color: #232323;
+    color: #343434;
 }
 
 .channel-container .message .message-text {
-    padding-left: 42px;
-    font-size: 14px;
-    color: #2f2f2f;
+    padding-left: 47px;
+    font-size: 15px;
+    color: #3a3a3a;
 }
 
 @keyframes channel-scroll {
