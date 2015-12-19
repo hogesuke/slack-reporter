@@ -72,7 +72,7 @@ class Reporter
   end
 
   def fetch_history(channel, time_range)
-    url = URI.parse("https://slack.com/api/channels.history?token=#{@token}&channel=#{channel['id']}&oldest=#{time_range[:start_time]}&latest=#{time_range[:end_time]}")
+    url = URI.parse("https://slack.com/api/channels.history?token=#{@token}&channel=#{channel['id']}&oldest=#{time_range[:start_time]}&latest=#{time_range[:end_time]}&count=1000")
     puts 'start history request'
     res = Net::HTTP.get(url)
     puts 'end history request'
