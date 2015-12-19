@@ -9,7 +9,7 @@ Slack Reporter
 
 ## 使い方
 #### SlackのAPI tokenを作成
-https://api.slack.com/webより作成できます。
+https://api.slack.com/web より作成できます。
 
 #### tokenを環境変数に設定
 ```sh
