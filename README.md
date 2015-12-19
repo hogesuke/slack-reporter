@@ -6,6 +6,7 @@ Slack Reporter
 
 ## サンプルイメージ
 TODO
+![screenshot](https://raw.github.com/wiki/hogesuke/slack-reporter/img/slack-reporter-sample1.png)
 
 ## 使い方
 #### SlackのAPI tokenを作成
@@ -38,5 +39,5 @@ crontabに設定する場合。
 30 18 * * * /path/to/reporter.rb 0930 1830
 ```
 
-### ライセンス
+## ライセンス
 MIT
