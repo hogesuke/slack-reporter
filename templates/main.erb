@@ -37,7 +37,6 @@
                 <div class="user-icon">
                   <% user = users.find{ |u| u['id'] == m['user'] } %>
                   <% if user && user['profile'] && user['profile']['image_48'] %>
-                      <% pp user['profile'] %>
                       <img src="<%= users.find{ |u| u['id'] == m['user'] }['profile']['image_48'] %>">
                   <% end %>
                 </div>
