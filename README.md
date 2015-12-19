@@ -5,7 +5,6 @@ Slack Reporter
 [Slack Silencer](https://github.com/dopin/slack-silencer)と併せて使うことで、作業に集中できる環境を構築できます。
 
 ## サンプルイメージ
-TODO
 ![screenshot](https://raw.github.com/wiki/hogesuke/slack-reporter/img/slack-reporter-sample1.png)
 
 ## 使い方
