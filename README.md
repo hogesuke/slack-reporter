@@ -4,10 +4,10 @@ Slack Reporter
 指定の期間に投稿されたメッセージをレポートにまとめるツールです。  
 [Slack Silencer](https://github.com/dopin/slack-silencer)と併せて使うことで、作業に集中できる環境を構築できます。
 
-### サンプルイメージ
+## サンプルイメージ
 TODO
 
-### 使い方
+## 使い方
 #### SlackのAPI tokenを作成
 [https://api.slack.com/web:title]より作成可能です。
 
@@ -24,7 +24,7 @@ export SLACK_USER=xxxxxxxxxx
 ```sh
 git clone git@github.com:hogesuke/slack-reporter.git
 ```
-#### コマンドラインよりプログラムを実行
+##### コマンドラインよりプログラムを実行
 ```sh
 # 9:30から18:30のメッセージを対象にする場合
 /path/to/reporter.rb 0930 1830
