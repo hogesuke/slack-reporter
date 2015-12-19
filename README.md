@@ -9,7 +9,7 @@ TODO
 
 ## 使い方
 #### SlackのAPI tokenを作成
-[https://api.slack.com/web:title]より作成可能です。
+https://api.slack.com/webより作成できます。
 
 #### tokenを環境変数に設定
 ```sh
@@ -24,14 +24,14 @@ export SLACK_USER=xxxxxxxxxx
 ```sh
 git clone git@github.com:hogesuke/slack-reporter.git
 ```
-##### コマンドラインよりプログラムを実行
+#### コマンドラインよりプログラムを実行
 ```sh
 # 9:30から18:30のメッセージを対象にする場合
 /path/to/reporter.rb 0930 1830
 # 現時刻から1時間前までのメッセージを対象にする場合
 /path/to/reporter.rb 60
 ```
-crontabに設定することで自動実行も可能です。
+crontabに設定する場合。
 
 ```sh
 # 18:30にレポート作成
