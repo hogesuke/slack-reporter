@@ -17,7 +17,7 @@
       <ul>
         <% channels.each do |c| %>
             <a href="#channel_<%= c['name'] %>">
-              <li><%= c['name'] %></li>
+              <li><%= c['name'] %><span class="message-count"><%= histories[c['id']]['messages'].size %></span></li>
             </a>
         <% end %>
       </ul>
