@@ -17,7 +17,11 @@
       <ul>
         <% channels.each do |c| %>
             <a href="#channel_<%= c['name'] %>">
-              <li><%= c['name'] %><span class="message-count"><%= histories[c['id']]['messages'].size %></span></li>
+              <li><%= c['name'] %>
+                <% if histories[c['id']]['messages'].size > 0 %>
+                    <span class="message-count"><%= histories[c['id']]['messages'].size %></span>
+                <% end %>
+              </li>
             </a>
         <% end %>
       </ul>
@@ -48,6 +52,9 @@
                     <div class="message-text"><%= m['attachments'] %></div>
                 <% end %>
               </div>
+          <% end %>
+          <% if history['messages'].size == 0 %>
+              <div class="no-message">投稿されたメッセージがありません</div>
           <% end %>
         </div>
     <% end %>

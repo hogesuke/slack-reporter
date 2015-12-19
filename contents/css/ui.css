@@ -42,10 +42,10 @@ html, body {
 }
 
 #side-bar #channel-list ul a li .message-count {
-    float: left;
+    float: right;
     display: block;
     margin: 0 5px;
-    padding: 2px 5px;
+    padding: 2px 7px;
     background-color: #EB4D5C;
     font-size: 12px;
     color: #FFFFFF;
@@ -115,6 +115,11 @@ html, body {
     padding-left: 47px;
     font-size: 15px;
     color: #3a3a3a;
+}
+
+.channel-container .no-message {
+    color: #bbbbbb;
+    font-size: 13px;
 }
 
 @keyframes channel-scroll {
