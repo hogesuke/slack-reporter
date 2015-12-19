@@ -1,5 +1,6 @@
 require 'json'
 require 'net/http'
+require 'openssl'
 require 'uri'
 require 'erb'
 require 'date'
@@ -10,6 +11,7 @@ class Reporter
 
   def initialize
     @token = ENV['SLACK_API_TOKEN']
+    @user = ENV['SLACK_USER']
 
     if ARGV.size == 2
       @time_range = get_time_range(start_time_str: ARGV[0], end_time_str: ARGV[1])
@@ -31,23 +33,23 @@ class Reporter
       histories[c['id']] = fetch_history(c, @time_range)
     end
 
-    # pp histories
-
     user_ids = []
     histories.each do |ch_id, history|
       user_ids << history['messages'].select{ |m| !m['user'].nil? }.map{ |m| m['user'] }
     end
     user_ids.flatten!.uniq!
-    # pp user_ids
 
     users = fetch_users(user_ids)
     user_names = {}
     users.map{ |u| user_names[u['id']] = u['name'] }
 
     template = File.read(File.join(__dir__, './templates/main.erb'))
-    html = ERB.new(template).result(binding)
+    html     = ERB.new(template).result(binding)
+    path     = File.join(__dir__, "contents/#{DateTime.now.strftime('%Y%m%d_%H%M%S')}.html")
 
-    File.write(File.join(__dir__, "./contents/#{DateTime.now.strftime('%Y%m%d_%H%M%S')}.html"), html)
+    File.write(path, html)
+
+    post_report(@user, 'file://' + path)
   end
 
   def fetch_channels()
@@ -62,9 +64,7 @@ class Reporter
     users = []
     user_ids.each do |id|
       url = URI.parse("https://slack.com/api/users.info?token=#{@token}&user=#{id}")
-      puts 'start user request'
       res = Net::HTTP.get(url)
-      puts 'end user request'
       users << JSON.parse(res)
     end
 
@@ -73,9 +73,7 @@ class Reporter
 
   def fetch_history(channel, time_range)
     url = URI.parse("https://slack.com/api/channels.history?token=#{@token}&channel=#{channel['id']}&oldest=#{time_range[:start_time]}&latest=#{time_range[:end_time]}&count=1000")
-    puts 'start history request'
     res = Net::HTTP.get(url)
-    puts 'end history request'
 
     JSON.parse(res)
   end
@@ -125,6 +123,21 @@ class Reporter
     end
 
     { :start_time => start_time.to_i, :end_time => end_time.to_i }
+  end
+
+  def post_report(user_name, path)
+    message = "`#{path}` にレポートが作成されました。"
+
+    url = URI.parse(URI.escape("https://slack.com/api/chat.postMessage?token=#{@token}&channel=#{'@' + user_name}&text=#{message}&username=SlackReporter"))
+    req = Net::HTTP::Post.new(url.request_uri)
+
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+    http.start do |h|
+      h.request(req)
+    end
   end
 
 end
