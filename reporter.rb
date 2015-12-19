@@ -13,6 +13,13 @@ class Reporter
     @token = ENV['SLACK_API_TOKEN']
     @user = ENV['SLACK_USER']
 
+    if @token.nil?
+      fail 'SLACK_API_TOKENを環境変数に登録してください。'
+    end
+    if @user.nil?
+      fail 'SLACK_USERを環境変数に登録してください。'
+    end
+
     if ARGV.size == 2
       @time_range = get_time_range(start_time_str: ARGV[0], end_time_str: ARGV[1])
     elsif ARGV.size == 1
