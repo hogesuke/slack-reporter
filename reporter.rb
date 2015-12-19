@@ -10,18 +10,25 @@ class Reporter
 
   def initialize
     @token = ENV['SLACK_API_TOKEN']
-    @start_time = ARGV[0]
-    @end_time = ARGV[1]
+
+    if ARGV.size == 2
+      @time_range = get_time_range(start_time_str: ARGV[0], end_time_str: ARGV[1])
+    elsif ARGV.size == 1
+      @time_range = get_time_range(minutes_str: ARGV[0])
+    else
+      fail "取得するメッセージの時間範囲、または、何分前からのメッセージを取得するか指定してください。\n" +
+               "ex. reporter.rb 0900 1800  #9:00 - 18:00 のメッセージを取得\n" +
+               "ex. reporter.rb 120        # 2時間前からのメッセージを取得"
+
+    end
   end
 
   def run
-    time_range = get_time_range(@start_time, @end_time)
-
     channels = fetch_channels
 
     histories = {}
     channels.each do |c|
-      histories[c['id']] = fetch_history(c, time_range)
+      histories[c['id']] = fetch_history(c, @time_range)
     end
 
     # pp histories
@@ -73,36 +80,48 @@ class Reporter
     JSON.parse(res)
   end
 
-  def get_time_range(start_time_str, end_time_str)
+  def get_time_range(start_time_str: nil, end_time_str: nil, minutes_str: nil)
 
-    time_regexp = /([01][0-9]|2[0-4])[0-5][0-9]/
+    if minutes_str
+      minutes_regexp = /[1-9][0-9]*/
 
-    unless start_time_str =~ time_regexp and end_time_str =~ time_regexp
-      fail 'start_time, end_timeは4桁の数字で時刻を入力してください。'
-    end
+      unless minutes_str =~ minutes_regexp
+        fail 'minutesは1以上の数字を入力してください。'
+      end
 
-    unless start_time_str.to_i <= 2400 and end_time_str.to_i <= 2400
-      fail '2400より大きい時刻の指定はできません。'
-    end
+      time_now   = Time.now
+      start_time = time_now - minutes_str.to_i * 60
+      end_time   = time_now
+    else
+      time_regexp = /([01][0-9]|2[0-4])[0-5][0-9]/
 
-    start_time_str = start_time_str[0..1] + ':' + start_time_str[2..3]
-    end_time_str   = end_time_str[0..1] + ':' + end_time_str[2..3]
+      unless start_time_str =~ time_regexp and end_time_str =~ time_regexp
+        fail 'start_time, end_timeは4桁の数字で時刻を入力してください。'
+      end
 
-    start_time    = Time.parse(start_time_str)
-    end_time      = Time.parse(end_time_str)
-    a_day_seconds = 24 * 60 * 60
+      unless start_time_str.to_i <= 2400 and end_time_str.to_i <= 2400
+        fail '2400より大きい時刻の指定はできません。'
+      end
 
-    if end_time > Time.now
-      start_time = start_time - a_day_seconds
-      end_time = end_time - a_day_seconds
-    end
+      start_time_str = start_time_str[0..1] + ':' + start_time_str[2..3]
+      end_time_str   = end_time_str[0..1] + ':' + end_time_str[2..3]
 
-    if start_time > end_time
-      start_time = start_time - a_day_seconds
-    end
+      start_time    = Time.parse(start_time_str)
+      end_time      = Time.parse(end_time_str)
+      a_day_seconds = 24 * 60 * 60
 
-    if start_time == end_time
-      start_time = start_time - a_day_seconds
+      if end_time > Time.now
+        start_time = start_time - a_day_seconds
+        end_time = end_time - a_day_seconds
+      end
+
+      if start_time > end_time
+        start_time = start_time - a_day_seconds
+      end
+
+      if start_time == end_time
+        start_time = start_time - a_day_seconds
+      end
     end
 
     { :start_time => start_time.to_i, :end_time => end_time.to_i }
