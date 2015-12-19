@@ -8,22 +8,23 @@ Slack Reporter
 TODO
 
 ### 使い方
-1. SlackのAPI tokenを作成
+#### SlackのAPI tokenを作成
 [https://api.slack.com/web:title]より作成可能です。
-2. tokenを環境変数に設定
+
+#### tokenを環境変数に設定
 ```sh
 export SLACK_API_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
-3. Slackのユーザ名を環境変数に設定（オプション）  
+#### Slackのユーザ名を環境変数に設定（オプション）  
 設定するとSlackのダイレクトメッセージでレポートのパスをお知らせします。
 ```sh
 export SLACK_USER=xxxxxxxxxx
 ```
-4. Slack Reporterをgit clone
+#### Slack Reporterをgit clone
 ```sh
 git clone git@github.com:hogesuke/slack-reporter.git
 ```
-5. コマンドラインよりプログラムを実行
+#### コマンドラインよりプログラムを実行
 ```sh
 # 9:30から18:30のメッセージを対象にする場合
 /path/to/reporter.rb 0930 1830
